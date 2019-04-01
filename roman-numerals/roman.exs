@@ -34,7 +34,3 @@ defmodule Roman do
     convert(number - arabic, result <> roman)
   end
 end
-
-IO.inspect Roman.numerals(1)
-IO.inspect Roman.numerals(2)
-IO.inspect Roman.numerals(21)
