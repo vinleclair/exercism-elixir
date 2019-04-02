@@ -48,5 +48,3 @@ defmodule ProteinTranslation do
     end
   end
 end
-
-IO.inspect ProteinTranslation.of_rna("AUGUUUUC")
