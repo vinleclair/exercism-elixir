@@ -28,7 +28,7 @@ defmodule Roman do
   defp convert(number, result) do
     {arabic, roman} =
       Enum.find(@roman_numerals, fn x -> 
-        {arabic, roman} = x
+        {arabic, _roman} = x
         number - arabic >= 0 
       end)
     convert(number - arabic, result <> roman)
