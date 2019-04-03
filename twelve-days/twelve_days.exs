@@ -40,7 +40,10 @@ defmodule TwelveDays do
   def sing do
     verses(1, 12)
   end
-
+  
+  @doc """
+  Private helper functions.
+  """
   defp get_ordinal(number), do: elem(Enum.at(@lyrics, number - 1), 0)
   defp get_gift(number), do: elem(Enum.at(@lyrics, number - 1), 1)
 
@@ -48,5 +51,4 @@ defmodule TwelveDays do
   defp gift_list(number) do
     "#{number..2 |> Enum.map(&get_gift/1) |> Enum.join(", ")}, and #{get_gift(1)}"
   end
-  
 end
