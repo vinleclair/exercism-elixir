@@ -7,21 +7,17 @@ defmodule RunLengthEncoder do
   "2A3B4C" => "AABBBCCCC"
   """
   @spec encode(String.t()) :: String.t()
-  def encode(string) do
-    Regex.scan(~r/(.)\1+|(.)/, string, capture: :first)
-    |> Enum.reduce("", fn chars, acc -> acc <> get_data_value(List.first(chars)) end)
-  end
+  def encode(string),
+    do: Regex.replace ~r/(.)\1*/, string, &(encode String.length(&1), &2)
+
+  defp encode(1, char),
+    do: char
+  defp encode(len, char),
+    do: Integer.to_string(len) <> char
 
   @spec decode(String.t()) :: String.t()
-  def decode(string) do
-  end
-
-  defp get_data_value(chars) do
-    if String.length(chars) != 1 do
-      "#{String.length(chars)}#{String.at(chars, 0)}"
-    else
-      "#{String.at(chars, 0)}"
-    end
-  end
+  def decode(string),
+    do: Regex.replace ~r/(\d+)(.)/, string,
+    fn _, len, char -> String.duplicate(char, String.to_integer(len)) end
 end
 
