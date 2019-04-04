@@ -10,9 +10,9 @@ defmodule RunLengthEncoder do
   def encode(string),
     do: Regex.replace ~r/(.)\1*/, string, &(encode String.length(&1), &2)
 
-  defp encode(1, char),
+  defp do_encode(1, char),
     do: char
-  defp encode(len, char),
+  defp do_encode(len, char),
     do: Integer.to_string(len) <> char
 
   @spec decode(String.t()) :: String.t()
