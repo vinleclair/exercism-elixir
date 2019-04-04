@@ -19,5 +19,6 @@ defmodule RunLengthEncoder do
   def decode(string),
     do: Regex.replace ~r/(\d+)(.)/, string,
     fn _, len, char -> String.duplicate(char, String.to_integer(len)) end
+
 end
 
