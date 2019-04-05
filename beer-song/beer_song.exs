@@ -3,28 +3,10 @@ defmodule BeerSong do
   Get a single verse of the beer song
   """
   @spec verse(integer) :: String.t()
-  def verse(0),
+  def verse(number),
     do: """
-  No more bottles of beer on the wall, no more bottles of beer.
-  Go to the store and buy some more, 99 bottles of beer on the wall.
-  """
-
-  def verse(1),
-    do: """
-  1 bottle of beer on the wall, 1 bottle of beer.
-  Take it down and pass it around, no more bottles of beer on the wall.
-  """
-
-  def verse(2),
-    do: """
-  2 bottles of beer on the wall, 2 bottles of beer.
-  Take one down and pass it around, 1 bottle of beer on the wall.
-  """
-
-  def verse(number), 
-    do: """
-  #{number} bottles of beer on the wall, #{number} bottles of beer.
-  Take one down and pass it around, #{number - 1} bottles of beer on the wall.
+  #{number |> bottles |> String.capitalize} of beer on the wall, #{number |> bottles} of beer.
+  #{number |> action}, #{number - 1 |> bottles} of beer on the wall.
   """
 
   @doc """
@@ -34,4 +16,11 @@ defmodule BeerSong do
   def lyrics(range) do 
     Enum.map_join(range, "\n", &verse(&1))
   end
+
+  defp bottles(0), do: "no more bottles"
+  defp bottles(1), do: "1 bottle"
+  defp bottles(n), do: "#{if n > 0, do: n, else: 99} bottles"
+
+  defp action(0), do: "Go to the store and buy some more"
+  defp action(n), do: "Take #{if n == 1, do: "it", else: "one"} down and pass it around"
 end
