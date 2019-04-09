@@ -57,7 +57,6 @@ defmodule RobotSimulator do
     end
   end
 
-
   @doc """
   Simulate the robot's movement given a string of instructions.
 
