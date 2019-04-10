@@ -1,6 +1,13 @@
 defmodule RobotSimulator do
   defstruct [:direction, :position]
 
+  defguardp is_invalid_direction(direction) when direction not in [:north, :east, :south, :west] 
+  defguardp is_invalid_position(position) when 
+    not is_tuple(position) or 
+    tuple_size(position) != 2 or 
+    not is_integer(elem(position, 0)) or 
+    not is_integer(elem(position, 1))
+
   @turn_left %{
     :north => :west, 
     :east => :north, 
@@ -26,37 +33,11 @@ defmodule RobotSimulator do
   Valid directions are: `:north`, `:east`, `:south`, `:west`
   """
   @spec create(direction :: atom, position :: {integer, integer}) :: any
-  def create(direction \\ :north, position \\ {0, 0}) do
-    cond do 
-      is_invalid_direction(direction) ->
-        {:error, "invalid direction"}
-
-      is_invalid_position(position) ->
-        {:error, "invalid position"}
-
-      true ->
-        %RobotSimulator{direction: direction, position: position}
-    end
-  end
+  def create(direction \\ :north, position \\ {0,0})
+  def create(direction, _position) when is_invalid_direction(direction), do: {:error, "invalid direction"}
+  def create(_direction, position) when is_invalid_position(position), do: {:error, "invalid position"}
+  def create(direction, position), do: %RobotSimulator{direction: direction, position: position}
   
-  defp is_invalid_direction(direction), do: direction not in [:north, :east, :south, :west]
-
-  defp is_invalid_position(position) do
-    cond do
-      !is_tuple(position) ->
-        true
-
-      tuple_size(position) != 2 ->
-        true
-
-      !(position |> Tuple.to_list |> Enum.all?(&is_integer(&1))) ->
-        true
-
-      true ->
-        false
-    end
-  end
-
   @doc """
   Simulate the robot's movement given a string of instructions.
 
