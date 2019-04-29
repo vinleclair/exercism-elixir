@@ -1,6 +1,5 @@
 defmodule RNATranscription do
   @complements %{?G => ?C, ?C => ?G, ?T => ?A, ?A => ?U}
-  @complements_reduce %{'G' => 'C', 'C' => 'G', 'T' => 'A', 'A' => 'U'}
   @doc """
   Transcribes a character list representing DNA nucleotides to RNA
 
@@ -15,4 +14,3 @@ defmodule RNATranscription do
   end
 end
 
-IO.inspect RNATranscription.to_rna('ACTG')
